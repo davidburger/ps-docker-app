@@ -1,0 +1,27 @@
+#development version
+version: '2'
+
+services:
+
+  redis:
+    image: redis:3.2
+    hostname: ps_redis_1
+    container_name: ps_redis_1
+
+  ps_php_apache:
+    build:
+      context: ./docker/
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www/html/
+      - ./docker/apache/ps.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./data/logs:/var/log/apache2/
+    container_name: ps_php_apache_1
+    hostname: ps_php_apache_1
+    dns:
+      - 10.0.14.201
+      - 10.0.14.202
+    ports:
+      - 10088:80
+    links:
+      - redis
