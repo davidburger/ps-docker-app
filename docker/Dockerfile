@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y apt-utils build-essential ca-certificat
     #ldap prerequisity
     libldap2-dev \
     libmcrypt-dev \
+    libicu-dev g++ \
     memcached zlib1g-dev \
     curl libcurl3 libcurl3-dev \
     mc
@@ -28,6 +29,7 @@ RUN docker-php-ext-install ldap
 #RUN docker-php-ext-install mbstring
 #RUN docker-php-ext-install tokenizer
 RUN docker-php-ext-install mcrypt
+RUN docker-php-ext-install intl
 #RUN docker-php-ext-install curl
 #RUN docker-php-ext-install phar
 
@@ -72,4 +74,3 @@ RUN usermod -u 1000 www-data
 
 ADD . /var/www/html/
 WORKDIR /var/www/html/
-
